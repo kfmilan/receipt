@@ -5,20 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Receipt extends Model
+class Person extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'date',
         'name',
-        'service_charge_rate',
-        'user_id'
+        'total',
     ];
 
-    protected $casts = [
-        'date' => 'date:Y-m-d',
-    ];
+    public function receipt()
+    {
+        return $this->belongsTo(Receipt::class);
+    }
 
     public function user()
     {
@@ -27,6 +26,6 @@ class Receipt extends Model
 
     public function items()
     {
-        return $this->hasMany(Item::class);
+        return $this->belongsToMany(Item::class);
     }
 }
