@@ -16,4 +16,9 @@ class Item extends Model
         return $this->belongsTo(Receipt::class);
     }
 
+    public function people()
+    {
+        return $this->belongsToMany(Person::class);
+    }
+
 }
