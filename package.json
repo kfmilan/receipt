@@ -20,6 +20,8 @@
         "vue-tsc": "^2.0.24"
     },
     "dependencies": {
+        "@primevue/themes": "^4.0.4",
+        "primeicons": "^7.0.0",
         "primevue": "^4.0.4"
     }
 }
