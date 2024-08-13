@@ -63,7 +63,7 @@ const items = ref([
 </script>
 
 <template>
-    <main class="flex flex-col w-screen h-screen">
+    <main class="flex flex-col w-full h-full">
         <header>
             <div class="card p-4">
                 <Menubar :model="items" />

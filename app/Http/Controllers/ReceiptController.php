@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreReceiptRequest;
 use App\Http\Requests\UpdateReceiptRequest;
+use App\Http\Resources\ReceiptResource;
 use App\Models\Receipt;
+use Illuminate\Support\Facades\Cache;
+use Inertia\Inertia;
 
 class ReceiptController extends Controller
 {
@@ -13,7 +16,11 @@ class ReceiptController extends Controller
      */
     public function index()
     {
-        //
+        $receipts = Cache::remember('receipts', 600, function() {
+            return Receipt::orderBy('date', 'desc')->get();
+        });
+
+        return Inertia::render('Receipt/Index', ['receipts' => ReceiptResource::collection($receipts)]);
     }
 
     /**

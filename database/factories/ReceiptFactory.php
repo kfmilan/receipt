@@ -17,7 +17,10 @@ class ReceiptFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->text(10),
+            'date' => $this->faker->date('Y-m-d'),
+            'service_charge_rate' => $this->faker->randomFloat(2, 0, 100),
+            'user_id' => 1
         ];
     }
 }

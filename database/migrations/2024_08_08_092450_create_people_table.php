@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('people', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignIdFor(Receipt::class);
-            $table->foreignIdFor(User::class)->nullable();
+            $table->foreignIdFor(Receipt::class)->constrained();
+            $table->foreignIdFor(User::class)->connstrained()->nullable();
             $table->decimal('total', 10, 2);
             $table->timestamps();
         });

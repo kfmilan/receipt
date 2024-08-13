@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('date');
             $table->string('name');
             $table->integer('service_charge_rate');
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();
         });
     }
