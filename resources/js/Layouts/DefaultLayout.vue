@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+import Toast from "primevue/toast";
 import Menubar from "primevue/menubar";
 
 import "primeicons/primeicons.css";
@@ -64,6 +65,7 @@ const items = ref([
 
 <template>
     <main class="flex flex-col w-screen h-screen">
+        <Toast />
         <header>
             <div class="card p-4">
                 <Menubar :model="items" />
