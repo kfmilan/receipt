@@ -69,7 +69,7 @@ const items = ref([
                 <Menubar :model="items" />
             </div>
         </header>
-        <article class="flex-grow">
+        <article class="flex-grow p-4">
             <slot />
         </article>
     </main>
