@@ -14,11 +14,6 @@ interface Receipt {
 }
 
 defineProps<{ receipts: Receipt[] }>();
-
-const getRoute = (id: number) => {
-    console.log(`/receipts/${id}`);
-    return `/receipts/${id}`;
-};
 </script>
 
 <template>
