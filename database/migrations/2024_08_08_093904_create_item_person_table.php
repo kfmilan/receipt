@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('item_person', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Item::class);
-            $table->foreignIdFor(Person::class);
+            $table->foreignIdFor(Item::class)->constrained();
+            $table->foreignIdFor(Person::class)->constrained();
             $table->decimal('share', 10, 2);
             $table->timestamps();
         });

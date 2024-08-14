@@ -64,14 +64,14 @@ const items = ref([
 </script>
 
 <template>
-    <main class="flex flex-col w-screen h-screen">
-        <Toast />
+    <main class="flex flex-col w-full h-full">
+    <Toast />
         <header>
             <div class="card p-4">
                 <Menubar :model="items" />
             </div>
         </header>
-        <article class="flex-grow">
+        <article class="flex-grow p-4">
             <slot />
         </article>
     </main>
