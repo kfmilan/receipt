@@ -1,53 +1,64 @@
 <script setup lang="ts">
-import clsx from "clsx";
 import { ref } from "vue";
+import { router, usePage } from "@inertiajs/vue3";
 
+import clsx from "clsx";
 import Column from "primevue/column";
 import Button from "primevue/button";
 import DataTable from "primevue/datatable";
 import { useToast } from "primevue/usetoast";
+import ProgressSpinner from "primevue/progressspinner";
 
 import { User } from "../../Types/Models/User";
 
-defineProps<{ users: User[] }>();
+defineProps<{
+    users: User[];
+    favorite_ids: bigint[];
+}>();
+const page = usePage();
 const toast = useToast();
 
+const disabledButtons = ref<number[]>([]);
 const tableHeaders = [
     { field: "name", header: "Name" },
     { field: "email", header: "Email" },
 ];
 
 const handleFavorite = (user: any) => {
-    if (!disabledButtons.value.includes(user.id)) {
+    try {
         disabledButtons.value.push(user.id);
-        setTimeout(() => {
-            if (favorites.value.includes(user.id)) {
-                favorites.value.splice(favorites.value.indexOf(user.id), 1);
-                toast.add({
-                    severity: "info",
-                    summary: "Removed from favorites!",
-                    detail: `Test`,
-                    life: 3000,
-                });
-            } else {
-                favorites.value.push(user.id);
-                toast.add({
-                    severity: "success",
-                    summary: "Added to favorites!",
-                    detail: ``,
-                    life: 3000,
-                });
+        router.post(
+            route("users.favorite", user),
+            {},
+            {
+                onSuccess: () => {
+                    toast.add({
+                        severity: "info",
+                        summary: page.props.flash.message
+                            ? page.props.flash.message
+                            : "",
+                        life: 3000,
+                    });
+                },
+                onError: () => {
+                    toast.add({
+                        severity: "error",
+                        summary: "An error occured!",
+                        life: 3000,
+                    });
+                },
+                onFinish: () => {
+                    disabledButtons.value.splice(
+                        disabledButtons.value.indexOf(user.id),
+                        1
+                    );
+                },
             }
-            disabledButtons.value.splice(
-                disabledButtons.value.indexOf(user.id),
-                1
-            );
-        }, 1500);
+        );
+    } finally {
+        disabledButtons.value.splice(disabledButtons.value.indexOf(user.id), 1);
     }
 };
-
-const favorites = ref([1, 3]);
-const disabledButtons = ref<number[]>([]);
 </script>
 
 <template>
@@ -58,17 +69,21 @@ const disabledButtons = ref<number[]>([]);
                 :field="column.field"
                 :header="column.header"
             ></Column>
-            <Column field="favorite">
+            <Column
+                :hidden="!page.props.auth.user"
+                :v-id="ProgressSpinner"
+                field="favorite"
+            >
                 <template #body="slotProps">
                     <Button
                         outlined
                         :icon="
                             clsx('pi', {
-                                'pi-star-fill': favorites.includes(
-                                    slotProps.data.id
+                                'pi-star-fill': favorite_ids.some(
+                                    (id) => id === slotProps.data.id
                                 ),
-                                'pi-star': !favorites.includes(
-                                    slotProps.data.id
+                                'pi-star': !favorite_ids.some(
+                                    (id) => id === slotProps.data.id
                                 ),
                                 'pi-spin pi-spinner': disabledButtons.includes(
                                     slotProps.data.id

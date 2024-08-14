@@ -9,62 +9,17 @@ import Menubar from "primevue/menubar";
 import { useToast } from "primevue/usetoast";
 
 const sharedData = usePage();
-
 const toast = useToast();
 
 const items = ref([
     {
-        label: "Home",
-        icon: "pi pi-home",
+        label: "Receipts",
+        icon: "pi pi-receipt",
     },
     {
-        label: "Features",
-        icon: "pi pi-star",
-    },
-    {
-        label: "Projects",
-        icon: "pi pi-search",
-        items: [
-            {
-                label: "Core",
-                icon: "pi pi-bolt",
-                shortcut: "⌘+S",
-            },
-            {
-                label: "Blocks",
-                icon: "pi pi-server",
-                shortcut: "⌘+B",
-            },
-            {
-                label: "UI Kit",
-                icon: "pi pi-pencil",
-                shortcut: "⌘+U",
-            },
-            {
-                separator: true,
-            },
-            {
-                label: "Templates",
-                icon: "pi pi-palette",
-                items: [
-                    {
-                        label: "Apollo",
-                        icon: "pi pi-palette",
-                        badge: 2,
-                    },
-                    {
-                        label: "Ultima",
-                        icon: "pi pi-palette",
-                        badge: 3,
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        label: "Contact",
-        icon: "pi pi-envelope",
-        badge: 3,
+        label: "Users",
+        icon: "pi pi-users",
+        route: route("users.index"),
     },
 ]);
 
@@ -80,7 +35,6 @@ const handleLogout = () => {
                     detail: "Logged out!",
                     life: 3000,
                 });
-                // props.auth.user = usePage().props.auth.user;
             },
         }
     );
@@ -93,6 +47,14 @@ const handleLogout = () => {
         <header>
             <div class="card p-4">
                 <Menubar :model="items">
+                    <template #item="{ item }">
+                        <Link href="/users" v-if="item.route">
+                            <div class="p-2">
+                                <span :class="item.icon" />
+                                <span class="ml-2">{{ item.label }}</span>
+                            </div>
+                        </Link>
+                    </template>
                     <template #end>
                         <Link
                             v-if="!sharedData.props.auth.user"
