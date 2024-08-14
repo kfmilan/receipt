@@ -1,9 +1,10 @@
 import "./bootstrap";
 import "../css/app.css";
 
+import { createApp, h } from "vue";
 import PrimeVue from "primevue/config";
 import Aura from "@primevue/themes/aura";
-import { createApp, h } from "vue";
+import ToastService from "primevue/toastservice";
 import { createInertiaApp } from "@inertiajs/vue3";
 
 import DefaultLayout from "./Layouts/DefaultLayout.vue"; // Import the DefaultLayout component
@@ -23,6 +24,7 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .use(ToastService)
             .use(PrimeVue, {
                 theme: {
                     preset: Aura,
