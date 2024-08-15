@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\ReceiptController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;

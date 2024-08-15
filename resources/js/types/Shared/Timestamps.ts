@@ -1,4 +1,4 @@
-export interface Timestamps {
+interface Timestamps {
     created_at: string;
     updated_at: string;
 }

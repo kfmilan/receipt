@@ -5,13 +5,7 @@ import Avatar from "primevue/avatar";
 import AvatarGroup from "primevue/avatargroup";
 import Button from "primevue/button";
 import { Link, router } from "@inertiajs/vue3";
-
-interface Receipt {
-    id: number;
-    name: string;
-    date: string;
-    service_charge_rate: number;
-}
+import { Receipt } from "@/Types/Models/Receipt";
 
 defineProps<{ receipts: Receipt[] }>();
 </script>
@@ -21,13 +15,13 @@ defineProps<{ receipts: Receipt[] }>();
         <div class="grid lg:grid-cols-5 grid-cols-2 gap-2">
             <Card v-for="receipt in receipts" class="p-3" :key="receipt.id">
                 <template #title>
-                    <p class="text-2xl font-bold text-blue-600">
+                    <p class="text-2xl font-bold text-green-300">
                         {{ receipt.name }}
                     </p>
                     <p class="text-sm">{{ receipt.date }}</p>
                 </template>
                 <template #content>
-                    <p>Item 1 - P100.00</p>
+                    <p>Test Hot reload</p>
                     <p>Item 2 - P150.00</p>
                     <p>Item 3 - P150.00</p>
                 </template>
@@ -41,13 +35,8 @@ defineProps<{ receipts: Receipt[] }>();
                         </AvatarGroup>
                     </div>
                     <div>
-                        <Link :href="route('receipts.show', receipt)">
-                            <Button
-                                icon="pi pi-arrow-right"
-                                text
-                                rounded
-                                severity="info"
-                            />
+                        <Link :href="route('receipts.show', { receipt })">
+                            <Button icon="pi pi-arrow-right" text rounded />
                         </Link>
                     </div>
                 </template>
