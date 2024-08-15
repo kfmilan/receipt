@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import { ref } from "vue";
-
-import Toast from "primevue/toast";
-import Menubar from "primevue/menubar";
+import { Link, router, usePage } from "@inertiajs/vue3";
 
 import "primeicons/primeicons.css";
+import Toast from "primevue/toast";
+import Button from "primevue/button";
+import Menubar from "primevue/menubar";
+import { useToast } from "primevue/usetoast";
+
+const sharedData = usePage();
+
+const toast = useToast();
 
 const items = ref([
     {
@@ -61,14 +67,48 @@ const items = ref([
         badge: 3,
     },
 ]);
+
+const handleLogout = () => {
+    router.post(
+        "/logout",
+        {},
+        {
+            onSuccess: () => {
+                toast.add({
+                    severity: "success",
+                    summary: "Success",
+                    detail: "Logged out!",
+                    life: 3000,
+                });
+                // props.auth.user = usePage().props.auth.user;
+            },
+        }
+    );
+};
 </script>
 
 <template>
     <main class="flex flex-col w-screen h-screen">
-        <Toast />
+        <Toast position="bottom-right" />
         <header>
             <div class="card p-4">
-                <Menubar :model="items" />
+                <Menubar :model="items">
+                    <template #end>
+                        <Link
+                            v-if="!sharedData.props.auth.user"
+                            :href="route('login')"
+                        >
+                            <Button severity="contrast" text label="Login" />
+                        </Link>
+                        <Button
+                            v-if="sharedData.props.auth.user"
+                            severity="contrast"
+                            text
+                            label="Logout"
+                            @click="handleLogout"
+                        />
+                    </template>
+                </Menubar>
             </div>
         </header>
         <article class="flex-grow p-4">
