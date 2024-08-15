@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\User;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
@@ -25,7 +26,7 @@ class UserController extends Controller
         });
 
         return Inertia::render('User/Index', [
-            'users' => $users,
+            'users' => UserResource::collection($users),
             'favorite_ids' => $currentUser != null ? $currentUser->favorites->pluck('id')->toArray() : [],
         ]);
     }
