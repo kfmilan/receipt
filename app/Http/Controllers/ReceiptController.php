@@ -44,7 +44,7 @@ class ReceiptController extends Controller
      */
     public function show(Receipt $receipt)
     {
-        //
+        return Inertia::render('Receipt/Show', ['receipt' => new ReceiptResource($receipt)]);
     }
 
     /**

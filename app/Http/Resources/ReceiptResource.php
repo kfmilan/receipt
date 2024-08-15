@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use app\Http\Helpers\Timestamps;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -20,6 +21,7 @@ class ReceiptResource extends JsonResource
             'name' => $this->name,
             'date' => (new Carbon($this->date))->format('F d, Y'),
             'service_charge_rate' => $this->service_charge_rate,
+            ...timestampResource($this),
         ];
     }
 }

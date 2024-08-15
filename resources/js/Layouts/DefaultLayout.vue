@@ -64,8 +64,8 @@ const items = ref([
 </script>
 
 <template>
-    <main class="flex flex-col w-full h-full">
-    <Toast />
+    <main class="flex flex-col w-screen h-screen">
+        <Toast />
         <header>
             <div class="card p-4">
                 <Menubar :model="items" />
