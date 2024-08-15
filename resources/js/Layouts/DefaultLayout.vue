@@ -94,7 +94,10 @@ const handleLogout = () => {
             <div class="card p-4">
                 <Menubar :model="items">
                     <template #end>
-                        <Link v-if="!sharedData.props.auth.user" href="/login">
+                        <Link
+                            v-if="!sharedData.props.auth.user"
+                            :href="route('login')"
+                        >
                             <Button severity="contrast" text label="Login" />
                         </Link>
                         <Button

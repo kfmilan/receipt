@@ -19,7 +19,7 @@ const form = useForm<FormData>({
 });
 
 const handleSubmit = () => {
-    form.post("/login", {
+    form.post(route("login"), {
         onSuccess: () => {
             toast.add({
                 severity: "success",
